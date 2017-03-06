@@ -15,4 +15,13 @@ public class SudokuBoardTest {
         SudokuBoard instance_2 = new SudokuBoard();
         assertTrue(Arrays.equals(instance_1.get(),instance_2.get()));
     }
+
+    @Test
+    public void checkCols()
+    {
+        for (int i=0;i<9;i++)
+        {
+
+        }
+    }
 }
