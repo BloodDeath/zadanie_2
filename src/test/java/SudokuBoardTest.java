@@ -13,6 +13,6 @@ public class SudokuBoardTest {
     {
         SudokuBoard instance_1 = new SudokuBoard();
         SudokuBoard instance_2 = new SudokuBoard();
-        assertFalse(Arrays.equals(instance_1.get(),instance_2.get()));
+        assertTrue(Arrays.equals(instance_1.get(),instance_2.get()));
     }
 }
