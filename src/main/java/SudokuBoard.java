@@ -13,6 +13,10 @@ public void fillBoard()
     boolean is_random = false;
     while (!is_random)
     {
+    /*
+    pick number
+     */
+
 
     }
 }
