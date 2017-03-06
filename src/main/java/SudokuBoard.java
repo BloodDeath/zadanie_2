@@ -7,4 +7,8 @@ public void fillBoard()
 {
 
 }
+public int[][] get()
+{
+    return board;
+}
 }
