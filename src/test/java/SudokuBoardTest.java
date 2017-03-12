@@ -13,15 +13,34 @@ public class SudokuBoardTest {
     {
         SudokuBoard instance_1 = new SudokuBoard();
         SudokuBoard instance_2 = new SudokuBoard();
+        instance_1.fillBoard();
+        instance_2.fillBoard();
         assertTrue(Arrays.equals(instance_1.get(),instance_2.get()));
     }
 
+//    @Test
+//    public void checkCols()
+//    {
+//        for (int i=0;i<9;i++)
+//        {
+//
+//        }
+//    }
     @Test
-    public void checkCols()
+    public void test()
     {
-        for (int i=0;i<9;i++)
+        SudokuBoard instance= new SudokuBoard();
+        instance.fillBoard();
+        int tab[][]=instance.get();
+        for(int i=0;i<tab.length;i++)
         {
-
+            for(int j=0;j<tab.length;j++)
+            {
+                System.out.print(tab[i][j]+"    ");
+            }
+            System.out.print("\n");
         }
+        assertTrue(true);
     }
+
 }
