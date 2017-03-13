@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.ExitException;
+
 import java.util.Random;
 
 /**
@@ -19,87 +21,235 @@ public void fillBoard()
         y = rand.nextInt(9);
         if(board[x][y]==0)
         {
-            board[x][y]=rand.nextInt(9)+1;
-            assist_board[x][y]=true;
+            int z= rand.nextInt(9)+1;
+            if(smallSquareOk(z, x, y,board) && lineOk(z, y,board) && columnOk(z, x,board))
+            {
+                board[x][y]=z;
+                assist_board[x][y]=true;
+            }
+            else i--;
         }
         else i--;
     }
-    for (int i=0;i<9;i++)
-    {
-        for(int j=0;j<9;j++)
-        {
-            if(assist_board[i][j]);
-            else {
-                int z = 1;
-                if (board[i][j]!=0) z=board[i][j];
-                boolean not_good = true;
-                while (not_good) {
-                    if (smallSquareOk(z, i, j) && lineOk(z, j) && columnOk(z, i)) {
-                        not_good = false;
-                        board[i][j] = z;
-                    } else {
-                        if (z < 9) z++;
-                        else {
-                            //---------POWROT
-                            boolean undone=true;
-                            int newi=i, newj=j;
-                                while(undone)
-                                {
-                                    if(newj>0)
-                                    {
-                                        if(assist_board[newi][newj]) newj--;
-                                        else
-                                        {
-                                            j=newj;
-                                            undone=false;
-                                        }
-                                    }
-                                    else if(assist_board[newi][newj])
-                                    {
-                                        newj=8;
-                                        newi--;
-                                    }
-                                    else
-                                    {
-                                        i=newi;
-                                        j=newj;
-                                        undone=false;
-                                    }
-                                }
+    //recurention(0,0,true);
+    recurention(board);
+    petle_rec++;
+//    for (int i=0;i<9;i++)
+//    {
+//        for(int j=0;j<9;j++)
+//        {
+//            if(assist_board[i][j]);
+//            else {
+//                int z = 1;
+//                if (board[i][j]!=0) z=board[i][j];
+//                boolean not_good = true;
+//                while (not_good) {
+//                    if (smallSquareOk(z, i, j) && lineOk(z, j) && columnOk(z, i)) {
+//                        not_good = false;
+//                        board[i][j] = z;
+//                    } else {
+//                        if (z < 9) z++;
+//                        else {
+//                            //---------POWROT
+//                            boolean undone=true;
+//                            int newi=i, newj=j;
+//                                while(undone)
+//                                {
+//                                    if(newj>0)
+//                                    {
+//                                        if(assist_board[newi][newj]) newj--;
+//                                        else
+//                                        {
+//                                            j=newj;
+//                                            undone=false;
+//                                        }
+//                                    }
+//                                    else
+//                                    {
+//                                        if(assist_board[newi][newj])
+//                                        {
+//                                            newj=8;
+//                                            newi--;
+//                                        }
+//                                        else
+//                                        {
+//                                            j=8;
+//                                            i=newi;
+//                                            undone=false;
+//                                        }
+//                                    }
+//                                        if(assist_board[newi][newj])  //newj==0
+//                                    {
+//                                        newj=8;
+//                                        newi--;
+//                                    }
+//                                    else
+//                                    {
+//                                        i=newi;
+//                                        j=newj;
+//                                        undone=false;
+//                                    }
+//                                }
+//
+//                            //--------------
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-                            //--------------
+}
+private int petle_rec=0;
+private void recurention(int x,int y, boolean sense)
+{
+//    petle_rec++;
+//    if(sense)
+//    {
+//        if(y<8) {
+//            if (assist_board[x][y]) recurention(x, y + 1, true);
+//            else {
+//                if (board[x][y]!=9)
+//                {
+//                    board[x][y]++;
+//                    if (smallSquareOk(board[x][y], x, y) && lineOk(board[x][y], y) && columnOk(board[x][y], x))
+//                        recurention(x, y + 1, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//                else
+//                {
+//                    board[x][y]=0;
+//                    if(y>0) recurention(x,y-1,false);
+//                   else if(x>0)
+//                    {
+//                        recurention(x-1,8,false);
+//                    }
+//                       //else throw new RuntimeException("Powrocilo do poczatku");
+//                }
+//
+//            }
+//        }
+//        else if (y == 8 && x < 8)
+//        {
+//            if (assist_board[x][y]) recurention(x+1, 0, true);
+//            else
+//            {
+//                if(board[x][y]!=9)
+//                {
+//                    board[x][y]++;
+//                    {
+//                        if (smallSquareOk(board[x][y], x, y) && lineOk(board[x][y], y) && columnOk(board[x][y], x))
+//                            recurention(x+1, 0, true);
+//                        else {
+//                            recurention(x, y, true);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    board[x][y]=0;
+//                    if(y>0)recurention(x,y-1,false);
+//                    else throw new RuntimeException("Powrocilo do poczatku, ale to nie moze wystapic");
+//                }
+//            }
+//        }
+//    }
+//    else
+//    {
+//        if(y>0) {
+//            if (assist_board[x][y]) recurention(x, y -1, false);
+//            else {
+//                board[x][y]++;
+//                {
+//                    if (smallSquareOk(board[x][y], x, y) && lineOk(board[x][y], y) && columnOk(board[x][y], x))
+//                        recurention(x, y + 1, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//
+//            }
+//        }
+//        else if (y == 8 && x < 8)
+//        {
+//            if (assist_board[x][y]) recurention(x+1, 0, true);
+//            else
+//            {
+//                board[x][y]++;
+//                {
+//                    if (smallSquareOk(board[x][y], x, y) && lineOk(board[x][y], y) && columnOk(board[x][y], x))
+//                        recurention(x+1, 0, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//            }
+//        }
+//    }
+    //----------------
+
+
+}
+private boolean isValid(int number,int x,int y, int[][]s)
+{
+if(lineOk(number,y,s) && columnOk(number,x,s) && smallSquareOk(number,x,y,s)) return true;
+    else return false;
+}
+private boolean recurention(int[][] s)
+{
+    int SIZE=9;
+
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (s[i][j] != 0) {
+                    continue;
+                }
+                for (int num = 1; num <= SIZE; num++) {
+                    if (isValid(num, i, j, s)) {
+                        s[i][j] = num;
+                        if (recurention(s)) {
+                            return true;
+                        } else {
+                            s[i][j] = 0;
                         }
                     }
                 }
+                return false;
             }
         }
-    }
-}
+        board=s;
+        return true;
 
-private boolean smallSquareOk(int number,int x, int y)
+}
+private boolean smallSquareOk(int number,int x, int y, int[][] s)
 {
     for (int i=0+(x%3)*3;i<3+(x%3)*3;i++)
     {
         for(int j=0+(y%3)*3;j<3+(y%3)*3;j++)
         {
-            if(board[i][j]==number) return false;
+           // if(board[i][j]==number) return false;
+            if(s[i][j]==number )return false;
         }
     }
     return true;
 }
-private boolean lineOk(int number, int line)
+private boolean lineOk(int number, int line,int[][]s )
 {
     for(int i=0;i<9;i++)
     {
-        if(board[i][line]==number) return false;
+       // if(board[i][line]==number) return false;
+        if(s[i][line]==number) return false;
     }
     return true;
 }
-private boolean columnOk(int number, int column)
+private boolean columnOk(int number, int column,int[][] s)
 {
     for(int i=0;i<9;i++)
     {
-        if(board[column][i]==number) return false;
+       // if(board[column][i]==number) return false;
+        if(s[column][i]==number) return false;
     }
     return true;
 }
