@@ -194,10 +194,10 @@ private void recurention(int x,int y, boolean sense)
 }
 private boolean isValid(int number,int x,int y, int[][]s)
 {
-if(lineOk(number,y,s) && columnOk(number,x,s) && smallSquareOk(number,x,y,s)) return true;
+if(lineOk(number,y,s) && columnOk(number,x,s) && smallSquareOk(number,x,y,s) && number<=9) return true;
     else return false;
 }
-//private boolean recurention(int[][] s)
+//private boolean recurention(int[][] s)2
 //{
 //    petle_rec++;
 //    int SIZE=9;
@@ -229,6 +229,15 @@ if(lineOk(number,y,s) && columnOk(number,x,s) && smallSquareOk(number,x,y,s)) re
 //--
 private boolean recurention(int[][] s,int x, int y,int lastgoodnumber, boolean was_good) {
     petle_rec++;
+//    for(int i=0;i<board.length;i++)
+//    {
+//        for(int j=0;j<board.length;j++)
+//        {
+//            System.out.print(board[i][j]+"    ");
+//        }
+//        System.out.print("\n");
+//    }
+//    System.out.print("\n\n\n\n");
     boolean done=false;
     int number=lastgoodnumber+1;
    if (!assist_board[x][y]) {
@@ -242,34 +251,49 @@ private boolean recurention(int[][] s,int x, int y,int lastgoodnumber, boolean w
                number++;
                if(number>9)
                {
-                   if(x==0 && y==0 || x==8 && y==8) throw new RuntimeException("Przekroczylismy zakres powyzej 9 w kratce 0,0 w nieoczekiwanym miejscu");
-                    done=backward(x,y);
+                  // if(x==0 && y==0) throw new RuntimeException("Przekroczylismy zakres powyzej 9 w kratce 0,0 w nieoczekiwanym miejscu");
+                   board[x][y]=0;
+                   done=backward(x,y);
                }
             }
         }
     }
     else {
         if(was_good) {
-            if(x==8 && y==8) throw new RuntimeException("X=8 Y=8 w niewlasciwym miejscu");
+            if(x==8 && y==8)
+                throw new RuntimeException("X=8 Y=8 w niewlasciwym miejscu");
             forward(x,y);
         }
         else {
-            if(x==0 && y==0) throw new RuntimeException("X=0 Y=0 w niewlasciwym miejscu");
+            if(x==0 && y==0)
+            {
+//            for(int i=0;i<board.length;i++)
+//            {
+//                for(int j=0;j<board.length;j++)
+//                {
+//                    System.out.print(board[i][j]+"    ");
+//                }
+//                System.out.print("\n");
+//            }
+//            System.out.print("\n\n\n\n");
+            throw new RuntimeException("X=0 Y=0 w niewlasciwym miejscu");
+            }
+
             backward(x,y);
         }
     }
-    System.out.print("zwijanie rekurencji");
+  //  System.out.print("zwijanie rekurencji");
     return true;
 }
 private boolean forward(int x, int y)
 {
     if (y < 8){
-        recurention(board, x, y + 1, 0, true);
+        if(recurention(board, x, y + 1, 0, true))return true;
         return false;
     }
     else if (x == 8 && y == 8) return true;
     else if (y == 8 && x < 8){
-        recurention(board,x+1,0,0,true);
+        if(recurention(board,x+1,0,0,true))return true;
         return false;
     }
 //    System.err.print("In forward, unexcpeted x,y combination");
@@ -279,12 +303,12 @@ private boolean forward(int x, int y)
 private boolean backward(int x, int y)
 {
     if (y > 0) {
-        recurention(board, x, y - 1, board[x][y-1], false);
+        if(recurention(board, x, y - 1, board[x][y-1], false))return true;
         return false;
     }
 
     else if (x>0 && y == 0) {
-        recurention(board, x-1,8,board[x-1][8],false);
+        if(recurention(board, x-1,8,board[x-1][8],false))return true;
         return false;
     }
     else if (y==0 && x == 0){
@@ -296,9 +320,9 @@ private boolean backward(int x, int y)
 }
 private boolean smallSquareOk(int number,int x, int y, int[][] s)
 {
-    for (int i = (x % 3) * 3; i<3+(x%3)*3; i++)
+    for (int i = (x / 3)*3; i<3+(x/3)*3; i++)
     {
-        for(int j = (y % 3) * 3; j<3+(y%3)*3; j++)
+        for(int j = (y / 3)*3; j<3+(y/3)*3; j++)
         {
            // if(board[i][j]==number) return false;
             if(board[i][j]==number )return false;
