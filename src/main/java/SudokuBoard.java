@@ -126,7 +126,7 @@ private void recurention(int x,int y, boolean sense)
                     {
                         recurention(x-1,8,false);
                     }
-                       //else throw new RuntimeException("Powrocilo do poczatku");
+                       else throw new RuntimeException("Powrocilo do poczatku");
                 }
 
             }
@@ -237,11 +237,12 @@ private boolean recurention(int[][] s,int x, int y,int lastgoodnumber, boolean w
             if (isValid(number, x, y, board)) {
                 board[x][y]=number;
                 done=forward(x,y);
-
+                if(!done && y==8 && x==8) throw new RuntimeException ("Rekurencja niezakonczona pomimo osiagniecia prawidlowego stanu");
             } else {
                number++;
                if(number>9)
                {
+                   if(x==0 && y==0 || x==8 && y==8) throw new RuntimeException("Przekroczylismy zakres powyzej 9 w kratce 0,0 w nieoczekiwanym miejscu");
                     done=backward(x,y);
                }
             }
@@ -249,12 +250,15 @@ private boolean recurention(int[][] s,int x, int y,int lastgoodnumber, boolean w
     }
     else {
         if(was_good) {
+            if(x==8 && y==8) throw new RuntimeException("X=8 Y=8 w niewlasciwym miejscu");
             forward(x,y);
         }
         else {
+            if(x==0 && y==0) throw new RuntimeException("X=0 Y=0 w niewlasciwym miejscu");
             backward(x,y);
         }
     }
+    System.out.print("zwijanie rekurencji");
     return true;
 }
 private boolean forward(int x, int y)
@@ -268,8 +272,9 @@ private boolean forward(int x, int y)
         recurention(board,x+1,0,0,true);
         return false;
     }
-    System.err.print("In forward, unexcpeted x,y combination");
-    return true;
+//    System.err.print("In forward, unexcpeted x,y combination");
+//    return true;
+    throw new RuntimeException("In forward, unexcpeted x,y combination");
 }
 private boolean backward(int x, int y)
 {
@@ -284,19 +289,19 @@ private boolean backward(int x, int y)
     }
     else if (y==0 && x == 0){
         System.err.print("Wrocono do poczatku");
-        return true;
+        throw new RuntimeException("y=0,x=0 in backward");
     }
-    System.err.print("In backward, unexcpeted x,y combination");
-    return true;
+    throw new RuntimeException("In backward, unexcpeted x,y combination");
+   // return true;
 }
 private boolean smallSquareOk(int number,int x, int y, int[][] s)
 {
-    for (int i=0+(x%3)*3;i<3+(x%3)*3;i++)
+    for (int i = (x % 3) * 3; i<3+(x%3)*3; i++)
     {
-        for(int j=0+(y%3)*3;j<3+(y%3)*3;j++)
+        for(int j = (y % 3) * 3; j<3+(y%3)*3; j++)
         {
            // if(board[i][j]==number) return false;
-            if(s[i][j]==number )return false;
+            if(board[i][j]==number )return false;
         }
     }
     return true;
@@ -306,7 +311,7 @@ private boolean lineOk(int number, int line,int[][]s )
     for(int i=0;i<9;i++)
     {
        // if(board[i][line]==number) return false;
-        if(s[i][line]==number) return false;
+        if(board[i][line]==number) return false;
     }
     return true;
 }
@@ -315,7 +320,7 @@ private boolean columnOk(int number, int column,int[][] s)
     for(int i=0;i<9;i++)
     {
        // if(board[column][i]==number) return false;
-        if(s[column][i]==number) return false;
+        if(board[column][i]==number) return false;
     }
     return true;
 }
