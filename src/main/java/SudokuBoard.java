@@ -1,5 +1,3 @@
-import com.sun.javaws.exceptions.ExitException;
-
 import java.util.Random;
 
 /**
@@ -8,61 +6,14 @@ import java.util.Random;
 public class SudokuBoard {
     private int board[][];
     private boolean assist_board[][];
-    public void fillBoard()
+    SudokuBoard()
     {
         board=new int[9][9];
         assist_board= new boolean[9][9];
-        Random rand = new Random();
-        int x,y;
-
-        for(int i=0; i<17; i++)
-        {
-            x = rand.nextInt(9);
-            y = rand.nextInt(9);
-            if(board[x][y]==0)
-            {
-                int z= rand.nextInt(9)+1;
-                if(smallSquareOk(z, x, y,board) && lineOk(z, y,board) && columnOk(z, x,board))
-                {
-                    board[x][y]=z;
-                    assist_board[x][y]=true;
-                }
-                else i--;
-            }
-            else i--;
-        }
-        recurention(board);
-
     }
-    private boolean isValid(int number,int x,int y, int[][]s)
+    public boolean isValid(int number,int x,int y, int[][]s)
     {
         return lineOk(number, y, s) && columnOk(number, x, s) && smallSquareOk(number, x, y, s);
-    }
-    private boolean recurention(int[][] s)
-    {
-        int SIZE=9;
-
-            for (int i = 0; i < SIZE; i++) {
-                for (int j = 0; j < SIZE; j++) {
-                    if (s[i][j] != 0) {
-                        continue;
-                    }
-                    for (int num = 1; num <= SIZE; num++) {
-                        if (isValid(num, i, j, s)) {
-                            s[i][j] = num;
-                            if (recurention(s)) {
-                                return true;
-                            } else {
-                                s[i][j] = 0;
-                            }
-                        }
-                    }
-                    return false;
-                }
-            }
-            board=s;
-            return true;
-
     }
     private boolean smallSquareOk(int number,int x, int y, int[][] s)
     {
@@ -91,8 +42,27 @@ public class SudokuBoard {
         }
         return true;
     }
-    public int[][] get()
+    public int[][] getBoard()
 {
     return board;
 }
+    public int get(int x, int y) {return board[x][y];}
+    public boolean setBoard(int [][]s)
+    {
+        boolean valid=true;
+        for(int i=0;i<9;i++)
+            for(int j=0;j<9;j++)
+                if(!isValid(s[i][j],i,j,s)) valid=false;
+        if(valid)board=s;
+        return valid;
+    }
+    public boolean set(int x, int y, int value)
+    {
+        if(isValid(value,x,y,board))
+        {
+            board[x][y]=value;
+            return true;
+        }
+        else return false;
+    }
 }

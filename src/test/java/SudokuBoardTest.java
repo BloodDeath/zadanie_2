@@ -9,13 +9,15 @@ import static org.junit.Assert.*;
  */
 public class SudokuBoardTest {
     @Test
-    public void areDifferent()
+    public void areArraysDifferent()
     {
         SudokuBoard instance_1 = new SudokuBoard();
         SudokuBoard instance_2 = new SudokuBoard();
-        instance_1.fillBoard();
-        instance_2.fillBoard();
-        int tab[][]=instance_1.get();
+        SudokuSolver ss = new BacktrackingSudokuSolver();
+        ss.solve(instance_1);
+        ss.solve(instance_2);
+        // Do podejrzenia wygenerowanych plansz sudoku
+        int tab[][]=instance_1.getBoard();
         for(int i=0;i<tab.length;i++)
         {
             for(int j=0;j<tab.length;j++)
@@ -25,7 +27,7 @@ public class SudokuBoardTest {
             System.out.print("\n");
         }
         System.out.print("\n\n\n");
-        int tab2[][]=instance_2.get();
+        int tab2[][]=instance_2.getBoard();
         for(int i=0;i<tab2.length;i++)
         {
             for(int j=0;j<tab2.length;j++)
@@ -34,32 +36,7 @@ public class SudokuBoardTest {
             }
             System.out.print("\n");
         }
-        assertTrue(!Arrays.equals(instance_1.get(),instance_2.get()));
+        // Koniec kodu do podejrzenia wygenerowanych plansz sudoku
+        assertTrue(!Arrays.equals(instance_1.getBoard(),instance_2.getBoard()));
     }
-
-//    @Test
-//    public void checkCols()
-//    {
-//        for (int i=0;i<9;i++)
-//        {
-//
-//        }
-//    }
-//    @Test
-//    public void test()
-//    {
-//        SudokuBoard instance= new SudokuBoard();
-//        instance.fillBoard();
-//        int tab[][]=instance.get();
-//        for(int i=0;i<tab.length;i++)
-//        {
-//            for(int j=0;j<tab.length;j++)
-//            {
-//                System.out.print(tab[i][j]+"    ");
-//            }
-//            System.out.print("\n");
-//        }
-//        assertTrue(true);
-//    }
-
 }
