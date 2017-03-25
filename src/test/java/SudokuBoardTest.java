@@ -15,7 +15,26 @@ public class SudokuBoardTest {
         SudokuBoard instance_2 = new SudokuBoard();
         instance_1.fillBoard();
         instance_2.fillBoard();
-        assertTrue(Arrays.equals(instance_1.get(),instance_2.get()));
+        int tab[][]=instance_1.get();
+        for(int i=0;i<tab.length;i++)
+        {
+            for(int j=0;j<tab.length;j++)
+            {
+                System.out.print(tab[i][j]+"    ");
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n\n\n");
+        int tab2[][]=instance_2.get();
+        for(int i=0;i<tab2.length;i++)
+        {
+            for(int j=0;j<tab2.length;j++)
+            {
+                System.out.print(tab2[i][j]+"    ");
+            }
+            System.out.print("\n");
+        }
+        assertTrue(!Arrays.equals(instance_1.get(),instance_2.get()));
     }
 
 //    @Test
