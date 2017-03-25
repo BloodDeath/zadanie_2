@@ -45,21 +45,21 @@ public class SudokuBoardTest {
 //
 //        }
 //    }
-    @Test
-    public void test()
-    {
-        SudokuBoard instance= new SudokuBoard();
-        instance.fillBoard();
-        int tab[][]=instance.get();
-        for(int i=0;i<tab.length;i++)
-        {
-            for(int j=0;j<tab.length;j++)
-            {
-                System.out.print(tab[i][j]+"    ");
-            }
-            System.out.print("\n");
-        }
-        assertTrue(true);
-    }
+//    @Test
+//    public void test()
+//    {
+//        SudokuBoard instance= new SudokuBoard();
+//        instance.fillBoard();
+//        int tab[][]=instance.get();
+//        for(int i=0;i<tab.length;i++)
+//        {
+//            for(int j=0;j<tab.length;j++)
+//            {
+//                System.out.print(tab[i][j]+"    ");
+//            }
+//            System.out.print("\n");
+//        }
+//        assertTrue(true);
+//    }
 
 }

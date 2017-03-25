@@ -34,7 +34,7 @@ public void fillBoard()
 //    recurention(0,0,true);
  //   recurention(board,0,0,0,true);
     recurention(board);
-    petle_rec++;
+//    petle_rec++;
 //    for (int i=0;i<9;i++)
 //    {
 //        for(int j=0;j<9;j++)
@@ -101,106 +101,105 @@ public void fillBoard()
 //    }
 
 }
-private int petle_rec=0;
-private void recurention(int x,int y, boolean sense)
-{
-    petle_rec++;
-    if(sense)
-    {
-        if(y<8) {
-            if (assist_board[x][y]) recurention(x, y + 1, true);
-            else {
-                if (board[x][y]!=9)
-                {
-                    board[x][y]++;
-                    if (isValid(board[x][y],x,y,board))
-                        recurention(x, y + 1, true);
-                    else {
-                        recurention(x, y, true);
-                    }
-                }
-                else
-                {
-                    board[x][y]=0;
-                    if(y>0) recurention(x,y-1,false);
-                   else if(x>0)
-                    {
-                        recurention(x-1,8,false);
-                    }
-                       //else throw new RuntimeException("Powrocilo do poczatku");
-                }
-
-            }
-        }
-        else if (y == 8 && x < 8)
-        {
-            if (assist_board[x][y]) recurention(x+1, 0, true);
-            else
-            {
-                if(board[x][y]!=9)
-                {
-                    board[x][y]++;
-                    {
-                        if (isValid(board[x][y],x,y,board))
-                            recurention(x+1, 0, true);
-                        else {
-                            recurention(x, y, true);
-                        }
-                    }
-                }
-                else
-                {
-                    board[x][y]=0;
-                    if(y>0)recurention(x,y-1,false);
-                    else throw new RuntimeException("Powrocilo do poczatku, ale to nie moze wystapic");
-                }
-            }
-        }
-    }
-    else
-    {
-        if(y>0) {
-            if (assist_board[x][y]) recurention(x, y -1, false);
-            else {
-                board[x][y]++;
-                {
-                    if (isValid(board[x][y],x,y,board))
-                        recurention(x, y + 1, true);
-                    else {
-                        recurention(x, y, true);
-                    }
-                }
-
-            }
-        }
-        else if (y == 8 && x < 8)
-        {
-            if (assist_board[x][y]) recurention(x+1, 0, true);
-            else
-            {
-                board[x][y]++;
-                {
-                    if (isValid(board[x][y],x,y,board))
-                        recurention(x+1, 0, true);
-                    else {
-                        recurention(x, y, true);
-                    }
-                }
-            }
-        }
-    }
-    //----------------
-
-
-}
+//private int petle_rec=0;
+//private void recurention(int x,int y, boolean sense)
+//{
+//    petle_rec++;
+//    if(sense)
+//    {
+//        if(y<8) {
+//            if (assist_board[x][y]) recurention(x, y + 1, true);
+//            else {
+//                if (board[x][y]!=9)
+//                {
+//                    board[x][y]++;
+//                    if (isValid(board[x][y],x,y,board))
+//                        recurention(x, y + 1, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//                else
+//                {
+//                    board[x][y]=0;
+//                    if(y>0) recurention(x,y-1,false);
+//                   else if(x>0)
+//                    {
+//                        recurention(x-1,8,false);
+//                    }
+//                       //else throw new RuntimeException("Powrocilo do poczatku");
+//                }
+//
+//            }
+//        }
+//        else if (y == 8 && x < 8)
+//        {
+//            if (assist_board[x][y]) recurention(x+1, 0, true);
+//            else
+//            {
+//                if(board[x][y]!=9)
+//                {
+//                    board[x][y]++;
+//                    {
+//                        if (isValid(board[x][y],x,y,board))
+//                            recurention(x+1, 0, true);
+//                        else {
+//                            recurention(x, y, true);
+//                        }
+//                    }
+//                }
+//                else
+//                {
+//                    board[x][y]=0;
+//                    if(y>0)recurention(x,y-1,false);
+//                    else throw new RuntimeException("Powrocilo do poczatku, ale to nie moze wystapic");
+//                }
+//            }
+//        }
+//    }
+//    else
+//    {
+//        if(y>0) {
+//            if (assist_board[x][y]) recurention(x, y -1, false);
+//            else {
+//                board[x][y]++;
+//                {
+//                    if (isValid(board[x][y],x,y,board))
+//                        recurention(x, y + 1, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//
+//            }
+//        }
+//        else if (y == 8 && x < 8)
+//        {
+//            if (assist_board[x][y]) recurention(x+1, 0, true);
+//            else
+//            {
+//                board[x][y]++;
+//                {
+//                    if (isValid(board[x][y],x,y,board))
+//                        recurention(x+1, 0, true);
+//                    else {
+//                        recurention(x, y, true);
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    //----------------
+//
+//
+//}
 private boolean isValid(int number,int x,int y, int[][]s)
 {
-if(lineOk(number,y,s) && columnOk(number,x,s) && smallSquareOk(number,x,y,s)) return true;
-    else return false;
+    return lineOk(number, y, s) && columnOk(number, x, s) && smallSquareOk(number, x, y, s);
 }
 private boolean recurention(int[][] s)
 {
-    petle_rec++;
+    //petle_rec++;
     int SIZE=9;
 
         for (int i = 0; i < SIZE; i++) {
@@ -292,9 +291,9 @@ private boolean recurention(int[][] s)
 //}
 private boolean smallSquareOk(int number,int x, int y, int[][] s)
 {
-    for (int i=0+(x/3)*3;i<3+(x/3)*3;i++)
+    for (int i = (x / 3) * 3; i<3+(x/3)*3; i++)
     {
-        for(int j=0+(y/3)*3;j<3+(y/3)*3;j++)
+        for(int j = (y / 3) * 3; j<3+(y/3)*3; j++)
         {
            // if(board[i][j]==number) return false;
             if(s[i][j]==number )return false;
